@@ -34,8 +34,9 @@ int main(void){
 
     for (int i = 0; i < 10; i++){
         readAllSensors(pd, gpios, sensors);
-        for (int j = 0; j < 5; j++) printf("%dsensor = %d", j, sensors[j]);
+        for (int j = 0; j < 5; j++) printf("%dsensor = %d\n", j, sensors[j]);
         time_sleep(1.0);
+        printf("\n");
     }
 
     return 0;
