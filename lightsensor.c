@@ -31,7 +31,7 @@ int main(void){
     set_mode(pd, S4, PI_INPUT);
     set_mode(pd, S5, PI_INPUT);
 
-    for (i = 0; i < 10; i++){
+    for (int i = 0; i < 10; i++){
         readAllSensors(sensors);
         for (int j = 0; j < 5; j++) printf("%dsensor = %d", j, sensors[j]);
         time_sleep(1.0);
