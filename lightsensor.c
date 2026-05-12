@@ -12,10 +12,11 @@
 #define S4 19
 #define S5 26
 
-void readAllSensors(int sensors[]);
+void readAllSensors(int gpios[], int sensors[]);
 
 int main(void){
     int pd;
+    int gpios[] = {S1, S2, S3, S4, S5};
     int sensors[5];
 
     if ((pd = pigpio_start(NULL, NULL)) < 0)
@@ -38,4 +39,9 @@ int main(void){
     }
 
     return 0;
+}
+
+void readAllSensors(int gpios[], int sensors[])
+{
+    for (int i = 0; i < 5; i++) sensors[i] = read_gpio(gpios[i]);
 }
