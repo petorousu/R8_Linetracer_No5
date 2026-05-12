@@ -6,4 +6,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(R8_Linetracer_No5
         main.c
         main.c
+        lightsensor.c
         lightsensor.c)
