@@ -43,5 +43,5 @@ int main(void){
 
 void readAllSensors(int gpios[], int sensors[])
 {
-    for (int i = 0; i < 5; i++) sensors[i] = read_gpio(gpios[i]);
+    for (int i = 0; i < 5; i++) sensors[i] = gpio_read(gpios[i]);
 }
