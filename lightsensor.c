@@ -12,7 +12,7 @@
 #define S4 19
 #define S5 26
 
-void readAllSensors(int gpios[], int sensors[]);
+void readAllSensors(int pd, int gpios[], int sensors[]);
 
 int main(void){
     int pd;
@@ -33,7 +33,7 @@ int main(void){
     set_mode(pd, S5, PI_INPUT);
 
     for (int i = 0; i < 10; i++){
-        readAllSensors(gpios, sensors);
+        readAllSensors(pd, gpios, sensors);
         for (int j = 0; j < 5; j++) printf("%dsensor = %d", j, sensors[j]);
         time_sleep(1.0);
     }
@@ -41,7 +41,7 @@ int main(void){
     return 0;
 }
 
-void readAllSensors(int gpios[], int sensors[])
+void readAllSensors(int pd, int gpios[], int sensors[])
 {
-    for (int i = 0; i < 5; i++) sensors[i] = gpio_read(gpios[i]);
+    for (int i = 0; i < 5; i++) sensors[i] = gpio_read(pd, gpios[i]);
 }
