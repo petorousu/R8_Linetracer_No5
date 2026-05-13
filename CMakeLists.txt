@@ -7,4 +7,5 @@ add_executable(R8_Linetracer_No5
         main.c
         main.c
         lightsensor.c
-        lightsensor.c)
+        lightsensor.c
+        main.c)
