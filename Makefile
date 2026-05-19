@@ -1,14 +1,14 @@
 CC = gcc
 BIN = main
-CFLAGS = -Wall -pthread -lpigpiod_if2 -lrt
+CFLAGS = -Wall -pthread
 
 all:	$(BIN)
 
 c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -lpigpiod_if2 -lrt
 
 main:	main.o motor.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ -lpigpiod_if2 -lrt
 
 clean:
 	rm -f *.o $(BIN)

@@ -54,7 +54,7 @@
 // PWM 周波数を決めるレジスタ番号、100Hz なら 61 をセット
 #define PWM_PRESCALE 254
 
-void init(int *pd, int *fd);
+void initHard(int *pd, int *fd);
 void sigHandler(int sig);
 int motor_drive(int pd, int fd, int lm, int rm);
 void readAllSensors(int pd, int gpios[], char sensors);
@@ -69,7 +69,7 @@ int main(void){
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
 
-    init(&pd, &fd);
+    initHard(&pd, &fd);
     motor_drive(pd, fd, 0, 0);
 
     while (running){
@@ -101,7 +101,7 @@ void sigHandler(int sig){
     running = 0;
 }
 
-void init(int *pd, int *fd){
+void initHard(int *pd, int *fd){
     if ((*pd = pigpio_start(NULL, NULL)) < 0)
     {
         fprintf(stderr, "pigpio connection failed.\n");
