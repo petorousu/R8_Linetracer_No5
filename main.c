@@ -64,34 +64,31 @@ volatile sig_atomic_t running = 1;
 int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
-    char sensors = 0x00; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
-    //int s;
+    char sensors = 0x00; //１バイトの変数のためcharを使っています。５つのセンサーをまとめてビット列で管理するためです.
 
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
 
     initHard(&pd, &fd);
     motor_drive(pd, fd, 0, 0);
-    printf("reset");
+    //printf("reset");
 
     while (running){
         readAllSensors(pd, gpios, &sensors);
-        //s = atoi(sensors);
         printf("%x\n", sensors);
 
-        if ((sensors & 0x1F) == 0x1F)
-        {
+        if ((sensors & 0x1F) == 0x1F){
             motor_drive(pd, fd, 0, 0);
-        }else if ((sensors & 0x1F) == 0b00011011 && (sensors & 0x1F) == 0b00010001)
-        {
+        }else if ((sensors & 0x1F) == 0x1B || (sensors & 0x1F) == 0x11){
+            // ↑.
             motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0b00010011 && (sensors & 0x1F) == 0b00000111)
-        {
+        }else if ((sensors & 0x1F) == 0x13 || (sensors & 0x1F) == 0x07){
+            // ←↑.
             motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0b00011001 && (sensors & 0x001F) == 0b00011100){
+        }else if ((sensors & 0x1F) == 0x19 || (sensors & 0x001F) == 0x1C){
+            // ↑→.
             motor_drive(pd, fd, 16, 8);
-        }else
-        {
+        }else{
             motor_drive(pd, fd, 4, 4);
         }
 
@@ -139,8 +136,8 @@ void initHard(int *pd, int *fd){
 }
 
 void readAllSensors(int pd, int gpios[], char *sensors){
-    printf("r");
-    *sensors = 0;
+    //printf("r");
+    *sensors = 0x00;
     for (int i = 0; i < 5; i++)
     {
         *sensors += ((char)gpio_read(pd, gpios[i]) & 0x01) << i;
