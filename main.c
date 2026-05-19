@@ -71,10 +71,11 @@ int main(void){
 
     initHard(&pd, &fd);
     motor_drive(pd, fd, 0, 0);
+    printf("reset");
 
     while (running){
         readAllSensors(pd, gpios, sensors);
-        printf("%x\n", (short int)sensors);
+        printf("%05x\n", (short int)sensors);
 
         if ((sensors & 0x1F) == 0x00)
         {
@@ -95,7 +96,7 @@ int main(void){
         time_sleep(1);
     }
 
-    printf("Stopping.")
+    printf("Stopping...\n");
     motor_drive(pd, fd, 0, 0);
     pigpio_stop(pd);
     return 0;
