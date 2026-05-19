@@ -95,7 +95,7 @@ int main(void){
             motor_drive(pd, fd, 4, 4);
         }
 
-        time_sleep(1);
+        time_sleep(0.1);
     }
 
     printf("Stopping...\n");
