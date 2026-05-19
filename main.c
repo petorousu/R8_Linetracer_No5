@@ -77,7 +77,7 @@ int main(void){
     while (running){
         readAllSensors(pd, gpios, &sensors);
         //s = atoi(sensors);
-        printf("%05x\n", s);
+        printf("%01x\n", s);
 
         if ((s & 0x1F) == 0x00)
         {
@@ -143,7 +143,6 @@ void readAllSensors(int pd, int gpios[], char *sensors){
     *sensors = 0;
     for (int i = 0; i < 5; i++)
     {
-        *sensors += (char)gpio_read(pd, gpios[i]);
-        *sensors <<= 1;
+        *sensors += ((char)gpio_read(pd, gpios[i]) & 0x01) << i;
     }
 }
