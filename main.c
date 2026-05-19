@@ -75,7 +75,7 @@ int main(void){
     printf("reset");
 
     while (running){
-        readAllSensors(pd, gpios, sensors);
+        readAllSensors(pd, gpios, &sensors);
         //s = atoi(sensors);
         printf("%05x\n", s);
 
