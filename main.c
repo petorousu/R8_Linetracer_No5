@@ -57,14 +57,15 @@
 void initHard(int *pd, int *fd);
 void sigHandler(int sig);
 int motor_drive(int pd, int fd, int lm, int rm);
-void readAllSensors(int pd, int gpios[], char sensors);
+void readAllSensors(int pd, int gpios[], char sensors[]);
 
 volatile sig_atomic_t running = 1;
 
 int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
-    char sensors = 0; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
+    char sensors[]; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
+    short int s;
 
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
@@ -75,6 +76,7 @@ int main(void){
 
     while (running){
         readAllSensors(pd, gpios, sensors);
+        s =
         printf("%05x\n", (short int)sensors);
 
         if ((sensors & 0x1F) == 0x00)
@@ -136,12 +138,10 @@ void initHard(int *pd, int *fd){
     printf("Init succsess.\n");
 }
 
-void readAllSensors(int pd, int gpios[], char sensors){
+void readAllSensors(int pd, int gpios[], char sensors[]){
     printf("r");
-    sensors = 0x00;
     for (int i = 0; i < 5; i++)
     {
-        sensors += gpio_read(pd, gpios[i]);
-        sensors <<= 1;
+        sensors[i] = (char)gpio_read(pd, gpios[i]);
     }
 }
