@@ -74,6 +74,7 @@ int main(void){
 
     while (running){
         readAllSensors(pd, gpios, sensors);
+        printf("%x", (short int)sensors);
 
         if ((sensors & 0x1F) == 0x00)
         {
@@ -90,6 +91,8 @@ int main(void){
         {
             motor_drive(pd, fd, 4, 4);
         }
+
+        time_sleep(1);
     }
 
     motor_drive(pd, fd, 0, 0);
@@ -127,6 +130,8 @@ void initHard(int *pd, int *fd){
     set_mode(*pd, S3, PI_INPUT);
     set_mode(*pd, S4, PI_INPUT);
     set_mode(*pd, S5, PI_INPUT);
+
+    printf("Init succsess.\n");
 }
 
 void readAllSensors(int pd, int gpios[], char sensors)
