@@ -111,6 +111,7 @@ int motor_drive(int pd, int fd, int lm, int rm)
 
 //この他に、プログラムの最初の方で以下の pigpiod への接続と PWM ユニットの初期化が必要。
 //（どこかの関数の中身の一部を抜き出した形で記述されているので注意！）
+/**
 int main(){
     int pd, fd;
     // pigpiod に接続
@@ -142,3 +143,4 @@ int main(){
     time_sleep(2.0);
     motor_drive(pd, fd, 0, 0);
 }
+**/
