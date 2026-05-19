@@ -77,7 +77,7 @@ int main(void){
     while (running){
         readAllSensors(pd, gpios, &sensors);
         //s = atoi(sensors);
-        printf("%01x\n", s);
+        printf("%x\n", s);
 
         if ((s & 0x1F) == 0x1F)
         {
