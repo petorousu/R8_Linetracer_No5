@@ -64,7 +64,7 @@ volatile sig_atomic_t running = 1;
 int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
-    char sensors[]; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
+    char sensors; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
     int s;
 
     signal(SIGINT, sigHandler);
@@ -75,7 +75,8 @@ int main(void){
     printf("reset");
 
     while (running){
-        readAllSensors(pd, gpios, sensors);s = atoi(sensors);
+        readAllSensors(pd, gpios, sensors);
+        //s = atoi(sensors);
         printf("%05x\n", s);
 
         if ((s & 0x1F) == 0x00)
@@ -137,10 +138,12 @@ void initHard(int *pd, int *fd){
     printf("Init succsess.\n");
 }
 
-void readAllSensors(int pd, int gpios[], char sensors[]){
+void readAllSensors(int pd, int gpios[], char *sensors){
     printf("r");
+    *sensors = 0;
     for (int i = 0; i < 5; i++)
     {
-        sensors[i] = (char)gpio_read(pd, gpios[i]);
+        *sensors += (char)gpio_read(pd, gpios[i]);
+        *sensors <<= 1;
     }
 }
