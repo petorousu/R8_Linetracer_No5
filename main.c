@@ -74,7 +74,7 @@ int main(void){
 
     while (running){
         readAllSensors(pd, gpios, sensors);
-        printf("%x", (short int)sensors);
+        printf("%x\n", (short int)sensors);
 
         if ((sensors & 0x1F) == 0x00)
         {
@@ -95,6 +95,7 @@ int main(void){
         time_sleep(1);
     }
 
+    printf(@)
     motor_drive(pd, fd, 0, 0);
     pigpio_stop(pd);
     return 0;
@@ -134,8 +135,8 @@ void initHard(int *pd, int *fd){
     printf("Init succsess.\n");
 }
 
-void readAllSensors(int pd, int gpios[], char sensors)
-{
+void readAllSensors(int pd, int gpios[], char sensors){
+    printf("r");
     sensors = 0x00;
     for (int i = 0; i < 5; i++)
     {
