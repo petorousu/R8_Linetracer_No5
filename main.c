@@ -95,7 +95,7 @@ int main(void){
         time_sleep(1);
     }
 
-    printf("Stop")
+    printf("Stopping.")
     motor_drive(pd, fd, 0, 0);
     pigpio_stop(pd);
     return 0;
