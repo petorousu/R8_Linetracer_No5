@@ -65,7 +65,7 @@ int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
     char sensors[]; //１バイトの変数のためcharを使っています。５つのセンサーをまとめて管理するためです.
-    short int s;
+    int s;
 
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
@@ -75,20 +75,19 @@ int main(void){
     printf("reset");
 
     while (running){
-        readAllSensors(pd, gpios, sensors);
-        s =
-        printf("%05x\n", (short int)sensors);
+        readAllSensors(pd, gpios, sensors);s = atoi(sensors);
+        printf("%05x\n", s);
 
-        if ((sensors & 0x1F) == 0x00)
+        if ((s & 0x1F) == 0x00)
         {
             motor_drive(pd, fd, 0, 0);
-        }else if ((sensors & 0x1F) == 0x11 && (sensors & 0x1F) == 0x1B)
+        }else if ((s & 0x1F) == 0x11 && (s & 0x1F) == 0x1B)
         {
             motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0x13 && (sensors & 0x1F) == 0x03)
+        }else if ((s & 0x1F) == 0x13 && (s & 0x1F) == 0x03)
         {
             motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0x19 && (sensors & 0x1F) == 0x1C){
+        }else if ((s & 0x1F) == 0x19 && (s & 0x001F) == 0x1C){
             motor_drive(pd, fd, 16, 8);
         }else
         {
