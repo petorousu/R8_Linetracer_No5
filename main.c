@@ -85,10 +85,10 @@ int main(void){
         }else if ((sensors & 0x1F) == 0b00011011 && (sensors & 0x1F) == 0b00010001)
         {
             motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0x13 && (sensors & 0x1F) == 0x03)
+        }else if ((sensors & 0x1F) == 0b000100111 && (sensors & 0x1F) == 0b00000111)
         {
             motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0x19 && (sensors & 0x001F) == 0x1C){
+        }else if ((sensors & 0x1F) == 0b00011001 && (sensors & 0x001F) == 0b00011100){
             motor_drive(pd, fd, 16, 8);
         }else
         {
