@@ -79,10 +79,10 @@ int main(void){
         //s = atoi(sensors);
         printf("%01x\n", s);
 
-        if ((s & 0x1F) == 0x00)
+        if ((s & 0x1F) == 0x1F)
         {
             motor_drive(pd, fd, 0, 0);
-        }else if ((s & 0x1F) == 0x11 && (s & 0x1F) == 0x1B)
+        }else if ((s & 0x1F) == 0b00011011 && (s & 0x1F) == 0b00010001)
         {
             motor_drive(pd, fd, 16, 16);
         }else if ((s & 0x1F) == 0x13 && (s & 0x1F) == 0x03)
