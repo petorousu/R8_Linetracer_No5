@@ -79,15 +79,19 @@ int main(void){
 
         if ((sensors & 0x1F) == 0x1F){
             motor_drive(pd, fd, 0, 0);
-        }else if ((sensors & 0x1F) == 0x1B || (sensors & 0x1F) == 0x11){
+        }else if ((sensors & 0x1F) == 0b00000100){
             // ↑.
             motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0x06 || (sensors & 0x1F) == 0x03){
+        }else if ((sensors & 0x1F) == 0b00000010){
             // ←↑.
             motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0x0C || (sensors & 0x1F) == 0x18){
-            // ↑→.
+        }else if ((sensors & 0x1F) == 0b00000001){
+            motor_drive(pd, fd, 4, 16);
+        }else if ((sensors & 0x1F) == 0b00001000){
             motor_drive(pd, fd, 16, 8);
+        }else if ((sensors & 0x1F) == 0b00010000){
+            // ↑→.
+            motor_drive(pd, fd, 16, 4);
         }else{
             motor_drive(pd, fd, 8, 8);
         }
