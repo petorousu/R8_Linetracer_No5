@@ -10,5 +10,8 @@ c.o:
 main:	main.o motor.o
 	$(CC) $(CFLAGS) -o $@ $^ -lpigpiod_if2 -lrt
 
+main_t:	main_t.o motor.o
+	$(CC) $(CFLAGS) -o $@ $^ -lpigpiod_if2 -lrt
+
 clean:
 	rm -f *.o $(BIN)
