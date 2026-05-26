@@ -62,8 +62,8 @@
 /*
  * ライントレース制御パラメータ
  */
-#define BASE_SPEED 8
-#define KP 4
+#define BASE_SPEED 6
+#define KP 3
 #define KD 2
 
 /*
