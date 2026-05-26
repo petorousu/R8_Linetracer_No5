@@ -148,7 +148,7 @@ int main(void){
     //printf("reset");
 
     while (running){
-        uint8_t sensors = readSensors(pd, gpios);
+        uint8_t sensors = readAllSensors(pd, gpios);
 
         controlLineTracePD(pd, fd, sensors);
 
@@ -195,12 +195,12 @@ void initHard(int *pd, int *fd){
     printf("Init success.\n");
 }
 
-void readAllSensors(int pd, int gpios[]){
+uint8_t readAllSensors(int pd, int gpios[]){
     //printf("r");
     uint8_t sensors = 0x00;
     for (int i = 0; i < 5; i++)
     {
-        sensors += ((char)gpio_read(pd, gpios[i]) & 0x01) << i;
+        sensors += ((uint8_t)gpio_read(pd, gpios[i]) & 0x01) << i;
     }
 
     return sensors;
