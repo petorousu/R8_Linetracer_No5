@@ -64,7 +64,7 @@ volatile sig_atomic_t running = 1;
 int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
-    char sensors = 0x00; //１バイトの変数のためcharを使っています。５つのセンサーをまとめてビット列で管理するためです.
+    char sensors = 0x00; //1バイトの変数のためcharを使っています。5つのセンサーをまとめてビット列で管理するためです.
 
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
@@ -82,20 +82,36 @@ int main(void){
         }else if ((sensors & 0x1F) == 0x1B || (sensors & 0x1F) == 0x11){
             // ↑.
             motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0x13 || (sensors & 0x1F) == 0x07){
+        }else if ((sensors & 0x1F) == 0x06 || (sensors & 0x1F) == 0x03){
             // ←↑.
             motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0x19 || (sensors & 0x001F) == 0x1C){
+        }else if ((sensors & 0x1F) == 0x0C || (sensors & 0x1F) == 0x18){
             // ↑→.
             motor_drive(pd, fd, 16, 8);
         }else{
-            motor_drive(pd, fd, 4, 4);
+            motor_drive(pd, fd, 8, 8);
         }
+        /**
+        *if ((sensors & 0x1F) == 0x1F){
+        motor_drive(pd, fd, 0, 0);
+        }else if ((sensors & 0x1F) == 0x1B || (sensors & 0x1F) == 0x11){
+        // ↑.
+        motor_drive(pd, fd, 16, 16);
+        }else if ((sensors & 0x1F) == 0x13 || (sensors & 0x1F) == 0x07){
+        // ←↑.
+        motor_drive(pd, fd, 8, 16);
+        }else if ((sensors & 0x1F) == 0x19 || (sensors & 0x1F) == 0x1C){
+        // ↑→.
+        motor_drive(pd, fd, 16, 8);
+        }else{
+        motor_drive(pd, fd, 8, 8);
+        }
+        **/
 
         time_sleep(0.1);
     }
 
-    printf("Stopping...\n");
+    printf("Stopping...\n\n");
     motor_drive(pd, fd, 0, 0);
     pigpio_stop(pd);
     return 0;
@@ -116,7 +132,7 @@ void initHard(int *pd, int *fd){
     *fd = i2c_open(*pd,PWMI2CCH,PWMI2CADR, 0);
     if (*fd < 0)
     {
-        fprintf(stderr, "Faild to init I2C.\n");
+        fprintf(stderr, "Failed to init I2C.\n");
         exit(EXIT_FAILURE);
     }
     i2c_write_byte_data(*pd, *fd,PWM_PRESCALE, 61); //PWM 周期 10ms に設定
@@ -132,7 +148,7 @@ void initHard(int *pd, int *fd){
     set_mode(*pd, S4, PI_INPUT);
     set_mode(*pd, S5, PI_INPUT);
 
-    printf("Init succsess.\n");
+    printf("Init success.\n");
 }
 
 void readAllSensors(int pd, int gpios[], char *sensors){
