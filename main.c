@@ -93,7 +93,7 @@ int main(void){
             // ↑→.
             motor_drive(pd, fd, 8, 2);
         }else{
-            motor_drive(pd, fd, 4, 4);
+            motor_drive(pd, fd, 4, 0);
         }
         /**
         *if ((sensors & 0x1F) == 0x1F){
