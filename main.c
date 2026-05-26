@@ -82,18 +82,18 @@ int main(void){
         }else if ((sensors & 0x1F) == 0b00000100){
             // ↑.
             motor_drive(pd, fd, 8, 8);
-        }else if ((sensors & 0x1F) == 0b00000010){
+        }else if ((sensors & 0x1F) == 0b00000010 || (sensors & 0x1F) == 0b00000011){
             // ←↑.
-            motor_drive(pd, fd, 4, 8);
-        }else if ((sensors & 0x1F) == 0b00000001){
-            motor_drive(pd, fd, 2, 8);
-        }else if ((sensors & 0x1F) == 0b00001000){
-            motor_drive(pd, fd, 8, 4);
-        }else if ((sensors & 0x1F) == 0b00010000){
+            motor_drive(pd, fd, 4, 10);
+        }else if ((sensors & 0x1F) == 0b00000001 || (sensors & 0x1F) == 0b00000110){
+            motor_drive(pd, fd, 3, 8);
+        }else if ((sensors & 0x1F) == 0b00001000 || (sensors & 0x1F) == 0b00001100){
+            motor_drive(pd, fd, 10, 4);
+        }else if ((sensors & 0x1F) == 0b00010000 || (sensors & 0x1F) == 0b00011000){
             // ↑→.
             motor_drive(pd, fd, 8, 2);
         }else{
-            motor_drive(pd, fd, 8, 4);
+            motor_drive(pd, fd, 8, -4);
         }
         /**
         *if ((sensors & 0x1F) == 0x1F){
