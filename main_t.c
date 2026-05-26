@@ -64,7 +64,7 @@
 void initHard(int *pd, int *fd);
 void sigHandler(int sig);
 int motor_drive(int pd, int fd, int lm, int rm);
-void readAllSensors(int pd, int gpios[], char sensors[]);
+uint8_t readAllSensors(int pd, int gpios[]);
 
 volatile sig_atomic_t running = 1;
 
@@ -138,7 +138,7 @@ void controlLineTracePD(int pd, int fd, uint8_t sensors)
 int main(void){
     int pd, fd;
     int gpios[] = {S1, S2, S3, S4, S5};
-    char sensors = 0x00; //1バイトの変数のためcharを使っています。5つのセンサーをまとめてビット列で管理するためです.
+    //1バイトの変数のためcharを使っています。5つのセンサーをまとめてビット列で管理するためです.
 
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
@@ -148,7 +148,7 @@ int main(void){
     //printf("reset");
 
     while (running){
-        uint8_t sensors = readSensorsAsBits(pd);
+        uint8_t sensors = readSensors(pd, gpios);
 
         controlLineTracePD(pd, fd, sensors);
 
@@ -195,11 +195,13 @@ void initHard(int *pd, int *fd){
     printf("Init success.\n");
 }
 
-void readAllSensors(int pd, int gpios[], char *sensors){
+void readAllSensors(int pd, int gpios[]){
     //printf("r");
-    *sensors = 0x00;
+    uint8_t sensors = 0x00;
     for (int i = 0; i < 5; i++)
     {
-        *sensors += ((char)gpio_read(pd, gpios[i]) & 0x01) << i;
+        sensors += ((char)gpio_read(pd, gpios[i]) & 0x01) << i;
     }
+
+    return sensors;
 }
