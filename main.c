@@ -91,26 +91,10 @@ int main(void){
             motor_drive(pd, fd, 10, 4);
         }else if ((sensors & 0x1F) == 0b00010000 || (sensors & 0x1F) == 0b00011000){
             // ↑→.
-            motor_drive(pd, fd, 8, 2);
+            motor_drive(pd, fd, 8, 3);
         }else{
             motor_drive(pd, fd, 8, -4);
         }
-        /**
-        *if ((sensors & 0x1F) == 0x1F){
-        motor_drive(pd, fd, 0, 0);
-        }else if ((sensors & 0x1F) == 0x1B || (sensors & 0x1F) == 0x11){
-        // ↑.
-        motor_drive(pd, fd, 16, 16);
-        }else if ((sensors & 0x1F) == 0x13 || (sensors & 0x1F) == 0x07){
-        // ←↑.
-        motor_drive(pd, fd, 8, 16);
-        }else if ((sensors & 0x1F) == 0x19 || (sensors & 0x1F) == 0x1C){
-        // ↑→.
-        motor_drive(pd, fd, 16, 8);
-        }else{
-        motor_drive(pd, fd, 8, 8);
-        }
-        **/
 
         time_sleep(0.01);
     }
