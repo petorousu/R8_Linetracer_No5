@@ -81,19 +81,19 @@ int main(void){
             motor_drive(pd, fd, 0, 0);
         }else if ((sensors & 0x1F) == 0b00000100){
             // ↑.
-            motor_drive(pd, fd, 16, 16);
+            motor_drive(pd, fd, 8, 8);
         }else if ((sensors & 0x1F) == 0b00000010){
             // ←↑.
-            motor_drive(pd, fd, 8, 16);
+            motor_drive(pd, fd, 4, 8);
         }else if ((sensors & 0x1F) == 0b00000001){
-            motor_drive(pd, fd, 4, 16);
+            motor_drive(pd, fd, 2, 8);
         }else if ((sensors & 0x1F) == 0b00001000){
-            motor_drive(pd, fd, 16, 8);
+            motor_drive(pd, fd, 8, 4);
         }else if ((sensors & 0x1F) == 0b00010000){
             // ↑→.
-            motor_drive(pd, fd, 16, 4);
+            motor_drive(pd, fd, 8, 2);
         }else{
-            motor_drive(pd, fd, 8, 8);
+            motor_drive(pd, fd, 4, 4);
         }
         /**
         *if ((sensors & 0x1F) == 0x1F){
@@ -112,7 +112,7 @@ int main(void){
         }
         **/
 
-        time_sleep(0.1);
+        time_sleep(0.01);
     }
 
     printf("Stopping...\n\n");
